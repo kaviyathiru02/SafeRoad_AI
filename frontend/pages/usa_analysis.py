@@ -26,7 +26,7 @@ USA_DATASET = (
     PROJECT_ROOT
     / "dataset"
     / "US Datasets"
-    / "cleaned_US_Accidents.csv"
+    / "cleaned_US_Accidents.csv.gz"
 )
 
 
@@ -214,8 +214,8 @@ if df.empty:
     st.caption(str(USA_DATASET))
 
     st.info(
-        "Please make sure that cleaned_US_Accidents.csv is inside "
-        "dataset/US Datasets/"
+    "Please make sure that cleaned_US_Accidents.csv.gz is inside "
+    "dataset/US Datasets/"
     )
 
     st.stop()
@@ -822,7 +822,7 @@ with info_col1:
 
     st.write("**Dataset file:**")
     st.caption(
-        "dataset/US Datasets/cleaned_US_Accidents.csv"
+    "dataset/US Datasets/cleaned_US_Accidents.csv.gz"
     )
 
     st.write(

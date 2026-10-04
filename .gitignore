@@ -25,6 +25,8 @@ dataset/US Datasets/hotspot_US_Accidents.csv
 dataset/US Datasets/preprocessed_US_Accidents.csv
 outputs/features_usa.csv
 outputs/processed_usa.csv
+# Large USA datasets
+dataset/US Datasets/*.csv
 
 # Old requirements backup
 requirements_backup.txt

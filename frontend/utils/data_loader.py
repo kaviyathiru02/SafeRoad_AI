@@ -3,8 +3,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 DATASET_DIR = ROOT / "dataset"
-USA_FILE = DATASET_DIR / "US Datasets" / "cleaned_US_Accidents.csv"
-
+USA_FILE = DATASET_DIR / "US Datasets" / "cleaned_US_Accidents.csv.gz"
 INDIA_FILES = [
     DATASET_DIR / "India_Final_Checked_Dataset.csv",
     DATASET_DIR / "India_Integrated_Road_Accidents.csv",
