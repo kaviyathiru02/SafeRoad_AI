@@ -218,10 +218,7 @@ def load_india_data():
 @st.cache_data
 def load_usa_data():
     candidates = [
-        USA_DIR / "cleaned_US_Accidents.csv",
-        USA_DIR / "hotspot_US_Accidents.csv",
-        USA_DIR / "preprocessed_US_Accidents.csv",
-        USA_DIR / "US_Accidents_Dec21_updated.csv",
+        USA_DIR / "cleaned_US_Accidents.csv.gz",
     ]
 
     for file in candidates:
