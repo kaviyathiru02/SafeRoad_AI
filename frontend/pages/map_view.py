@@ -31,7 +31,7 @@ INDIA_HOTSPOTS = DATASET_DIR / "India_Accident_Hotspots.csv"
 USA_DATA = (
     DATASET_DIR
     / "US Datasets"
-    / "cleaned_US_Accidents.csv"
+    
 )
 
 
@@ -504,7 +504,7 @@ else:
     if usa_df.empty:
 
         st.error(
-            "cleaned_US_Accidents.csv could not be loaded."
+            "cleaned_US_Accidents.csv.gz could not be loaded."
         )
 
         st.stop()

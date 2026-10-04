@@ -20,7 +20,7 @@ DATASET_DIR = ROOT_DIR / "dataset"
 INDIA_ML = DATASET_DIR / "India_ML_Dataset.csv"
 INDIA_HOTSPOT = DATASET_DIR / "India_Accident_Hotspots.csv"
 
-USA_CLEANED = DATASET_DIR / "US Datasets" / "cleaned_US_Accidents.csv"
+USA_CLEANED = DATASET_DIR / "US Datasets" / "cleaned_US_Accidents.csv.gz"
 
 
 # ============================================================
