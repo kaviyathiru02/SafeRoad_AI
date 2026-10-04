@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_946bbdfad3de0837e5dfcfff5526c1d7 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+<div style="
+position: fixed;
+top: 10px;
+left: 50%;
+transform: translateX(-50%);
+z-index:9999;
+background-color:white;
+padding:10px 20px;
+border-radius:8px;
+box-shadow:0px 2px 8px rgba(0,0,0,0.3);
+font-size:20px;
+font-weight:bold;
+">
+SafeRoad AI - India Accident Hotspot Map
+</div>
+    
+<div style="
+position: fixed;
+bottom: 30px;
+left: 30px;
+width: 190px;
+z-index:9999;
+background-color:white;
+border:2px solid grey;
+border-radius:8px;
+padding:12px;
+font-size:14px;
+box-shadow:0px 2px 8px rgba(0,0,0,0.3);
+">
+
+<b>Accident Risk Level</b>
+
+<br><br>
+
+<span style="
+display:inline-block;
+width:14px;
+height:14px;
+background:red;
+border-radius:50%;
+margin-right:8px;
+"></span>
+
+High Risk
+
+<br><br>
+
+<span style="
+display:inline-block;
+width:14px;
+height:14px;
+background:orange;
+border-radius:50%;
+margin-right:8px;
+"></span>
+
+Medium Risk
+
+<br><br>
+
+<span style="
+display:inline-block;
+width:14px;
+height:14px;
+background:green;
+border-radius:50%;
+margin-right:8px;
+"></span>
+
+Low Risk
+
+</div>
+    
+            <div class="folium-map" id="map_946bbdfad3de0837e5dfcfff5526c1d7" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_946bbdfad3de0837e5dfcfff5526c1d7 = L.map(
+                "map_946bbdfad3de0837e5dfcfff5526c1d7",
+                {
+                    center: [22.5, 80.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_0445ec742431d9c98dd7ca3d663cc6c3 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_0445ec742431d9c98dd7ca3d663cc6c3.addTo(map_946bbdfad3de0837e5dfcfff5526c1d7);
+        
+    
+            var marker_cluster_193f3fd3928c67dfda43fe8c45bd336b = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var circle_marker_f6d0b02d511597fa521d56507e6f3f69 = L.circleMarker(
+                [11.1271, 78.6569],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_df28d171fb05a6e8a91e5f37df8edbd3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_68e00adbe9e3509b02973d2b17e3432a = $(`<div id="html_68e00adbe9e3509b02973d2b17e3432a" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Tamil Nadu         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         7.661          <br>          <b>Accidents:</b>         44402          <br>          <b>Deaths:</b>         7662          <br>          <b>Injuries:</b>         39998      </div>     </div>`)[0];
+                popup_df28d171fb05a6e8a91e5f37df8edbd3.setContent(html_68e00adbe9e3509b02973d2b17e3432a);
+            
+        
+
+        circle_marker_f6d0b02d511597fa521d56507e6f3f69.bindPopup(popup_df28d171fb05a6e8a91e5f37df8edbd3)
+        ;
+
+        
+    
+    
+            circle_marker_f6d0b02d511597fa521d56507e6f3f69.bindTooltip(
+                `<div>
+                     Tamil Nadu - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_54923fdebcdb388dd5ae0914e5b27f84 = L.circleMarker(
+                [22.9734, 78.6569],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_28eaa67367f94089c7e59f5347d95179 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4367087625b3b1fa1ab43a6de90d9381 = $(`<div id="html_4367087625b3b1fa1ab43a6de90d9381" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Madhya Pradesh         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         6.454          <br>          <b>Accidents:</b>         37409          <br>          <b>Deaths:</b>         7514          <br>          <b>Injuries:</b>         32943      </div>     </div>`)[0];
+                popup_28eaa67367f94089c7e59f5347d95179.setContent(html_4367087625b3b1fa1ab43a6de90d9381);
+            
+        
+
+        circle_marker_54923fdebcdb388dd5ae0914e5b27f84.bindPopup(popup_28eaa67367f94089c7e59f5347d95179)
+        ;
+
+        
+    
+    
+            circle_marker_54923fdebcdb388dd5ae0914e5b27f84.bindTooltip(
+                `<div>
+                     Madhya Pradesh - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ad888ae2070cc1b76c7a67271f64c805 = L.circleMarker(
+                [26.8467, 80.9462],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_579b8bf24b90ea3f8c809f4c95996396 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d6d19a6e5cc7ea0f97bb6eafdec3c8c8 = $(`<div id="html_d6d19a6e5cc7ea0f97bb6eafdec3c8c8" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Uttar Pradesh         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         5.178          <br>          <b>Accidents:</b>         30011          <br>          <b>Deaths:</b>         13248          <br>          <b>Injuries:</b>         18815      </div>     </div>`)[0];
+                popup_579b8bf24b90ea3f8c809f4c95996396.setContent(html_d6d19a6e5cc7ea0f97bb6eafdec3c8c8);
+            
+        
+
+        circle_marker_ad888ae2070cc1b76c7a67271f64c805.bindPopup(popup_579b8bf24b90ea3f8c809f4c95996396)
+        ;
+
+        
+    
+    
+            circle_marker_ad888ae2070cc1b76c7a67271f64c805.bindTooltip(
+                `<div>
+                     Uttar Pradesh - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3f6d82a3021f90320d343d8d54130a69 = L.circleMarker(
+                [15.3173, 75.7139],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_2ebfb648e89ddba6b30365e6a7681f70 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0d39a88d137a24cc999523fc53f013e5 = $(`<div id="html_0d39a88d137a24cc999523fc53f013e5" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Karnataka         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         4.983          <br>          <b>Accidents:</b>         28882          <br>          <b>Deaths:</b>         7028          <br>          <b>Injuries:</b>         29507      </div>     </div>`)[0];
+                popup_2ebfb648e89ddba6b30365e6a7681f70.setContent(html_0d39a88d137a24cc999523fc53f013e5);
+            
+        
+
+        circle_marker_3f6d82a3021f90320d343d8d54130a69.bindPopup(popup_2ebfb648e89ddba6b30365e6a7681f70)
+        ;
+
+        
+    
+    
+            circle_marker_3f6d82a3021f90320d343d8d54130a69.bindTooltip(
+                `<div>
+                     Karnataka - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_19eaf720f3d0bad60a2578de499751b8 = L.circleMarker(
+                [10.8505, 76.2711],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_91bdf297cef86b8749f95f3f43173440 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fd543078e865fc290078b87d90edf82d = $(`<div id="html_fd543078e865fc290078b87d90edf82d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Kerala         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         4.870          <br>          <b>Accidents:</b>         28228          <br>          <b>Deaths:</b>         3228          <br>          <b>Injuries:</b>         29672      </div>     </div>`)[0];
+                popup_91bdf297cef86b8749f95f3f43173440.setContent(html_fd543078e865fc290078b87d90edf82d);
+            
+        
+
+        circle_marker_19eaf720f3d0bad60a2578de499751b8.bindPopup(popup_91bdf297cef86b8749f95f3f43173440)
+        ;
+
+        
+    
+    
+            circle_marker_19eaf720f3d0bad60a2578de499751b8.bindTooltip(
+                `<div>
+                     Kerala - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_721c2956b1232118006c15a6ef9b4c2a = L.circleMarker(
+                [19.7515, 75.7139],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_55caabf09bf967fb1ade85f7a53c258b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_30295862d17ecec15c31f985ac2dd74f = $(`<div id="html_30295862d17ecec15c31f985ac2dd74f" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Maharashtra         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         4.133          <br>          <b>Accidents:</b>         23956          <br>          <b>Deaths:</b>         8370          <br>          <b>Injuries:</b>         17588      </div>     </div>`)[0];
+                popup_55caabf09bf967fb1ade85f7a53c258b.setContent(html_30295862d17ecec15c31f985ac2dd74f);
+            
+        
+
+        circle_marker_721c2956b1232118006c15a6ef9b4c2a.bindPopup(popup_55caabf09bf967fb1ade85f7a53c258b)
+        ;
+
+        
+    
+    
+            circle_marker_721c2956b1232118006c15a6ef9b4c2a.bindTooltip(
+                `<div>
+                     Maharashtra - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_766d18ef572d8299dbdf036a8519d468 = L.circleMarker(
+                [27.0238, 74.2179],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_e6b82603cd744086807d742c011f2bb1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d6b2538ffc1c80a9fc8b81d8e8dab346 = $(`<div id="html_d6b2538ffc1c80a9fc8b81d8e8dab346" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Rajasthan         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         2.961          <br>          <b>Accidents:</b>         17160          <br>          <b>Deaths:</b>         6803          <br>          <b>Injuries:</b>         14301      </div>     </div>`)[0];
+                popup_e6b82603cd744086807d742c011f2bb1.setContent(html_d6b2538ffc1c80a9fc8b81d8e8dab346);
+            
+        
+
+        circle_marker_766d18ef572d8299dbdf036a8519d468.bindPopup(popup_e6b82603cd744086807d742c011f2bb1)
+        ;
+
+        
+    
+    
+            circle_marker_766d18ef572d8299dbdf036a8519d468.bindTooltip(
+                `<div>
+                     Rajasthan - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_533fdff81861aad81ef434ea9d17cb0a = L.circleMarker(
+                [15.9129, 79.74],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_647fb600c97fa3179d45db6e343b5c61 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d13092bbff47f747d0b373c63fe2bec1 = $(`<div id="html_d13092bbff47f747d0b373c63fe2bec1" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Andhra Pradesh         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         2.958          <br>          <b>Accidents:</b>         17143          <br>          <b>Deaths:</b>         5459          <br>          <b>Injuries:</b>         13598      </div>     </div>`)[0];
+                popup_647fb600c97fa3179d45db6e343b5c61.setContent(html_d13092bbff47f747d0b373c63fe2bec1);
+            
+        
+
+        circle_marker_533fdff81861aad81ef434ea9d17cb0a.bindPopup(popup_647fb600c97fa3179d45db6e343b5c61)
+        ;
+
+        
+    
+    
+            circle_marker_533fdff81861aad81ef434ea9d17cb0a.bindTooltip(
+                `<div>
+                     Andhra Pradesh - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_f70aed67a4a4e3ac8e606175c302d58a = L.circleMarker(
+                [18.1124, 79.0193],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 10, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_e1af39a93f22dc51ba076718920877e4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1973fab5eb3459fcd6ae63706fce0d02 = $(`<div id="html_1973fab5eb3459fcd6ae63706fce0d02" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Telangana         </h3>          <b>Hotspot Level:</b>         <span style="color:red;">             High         </span>          <br><br>          <b>Risk Score:</b>         2.887          <br>          <b>Accidents:</b>         16732          <br>          <b>Deaths:</b>         5065          <br>          <b>Injuries:</b>         13929      </div>     </div>`)[0];
+                popup_e1af39a93f22dc51ba076718920877e4.setContent(html_1973fab5eb3459fcd6ae63706fce0d02);
+            
+        
+
+        circle_marker_f70aed67a4a4e3ac8e606175c302d58a.bindPopup(popup_e1af39a93f22dc51ba076718920877e4)
+        ;
+
+        
+    
+    
+            circle_marker_f70aed67a4a4e3ac8e606175c302d58a.bindTooltip(
+                `<div>
+                     Telangana - High Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_75d8aabde63f202c326f6f788537ff26 = L.circleMarker(
+                [22.2587, 71.1924],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_8fd0201b3fd2da479dad7cd73eb29513 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b0b968667e4ad69e92765e86e3faf426 = $(`<div id="html_b0b968667e4ad69e92765e86e3faf426" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Gujarat         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         2.252          <br>          <b>Accidents:</b>         13053          <br>          <b>Deaths:</b>         5208          <br>          <b>Injuries:</b>         10229      </div>     </div>`)[0];
+                popup_8fd0201b3fd2da479dad7cd73eb29513.setContent(html_b0b968667e4ad69e92765e86e3faf426);
+            
+        
+
+        circle_marker_75d8aabde63f202c326f6f788537ff26.bindPopup(popup_8fd0201b3fd2da479dad7cd73eb29513)
+        ;
+
+        
+    
+    
+            circle_marker_75d8aabde63f202c326f6f788537ff26.bindTooltip(
+                `<div>
+                     Gujarat - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a253af44780a2b291063ce34e5aa1018 = L.circleMarker(
+                [21.2787, 81.8661],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_e4970d56fd73bedd1ac4ecb1b0300c5c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3db680bf95afd43bf7eb0f0c06db3f0d = $(`<div id="html_3db680bf95afd43bf7eb0f0c06db3f0d" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Chhattisgarh         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         1.880          <br>          <b>Accidents:</b>         10899          <br>          <b>Deaths:</b>         3860          <br>          <b>Injuries:</b>         8441      </div>     </div>`)[0];
+                popup_e4970d56fd73bedd1ac4ecb1b0300c5c.setContent(html_3db680bf95afd43bf7eb0f0c06db3f0d);
+            
+        
+
+        circle_marker_a253af44780a2b291063ce34e5aa1018.bindPopup(popup_e4970d56fd73bedd1ac4ecb1b0300c5c)
+        ;
+
+        
+    
+    
+            circle_marker_a253af44780a2b291063ce34e5aa1018.bindTooltip(
+                `<div>
+                     Chhattisgarh - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e505829b8e47ea83b9ed341de29b173d = L.circleMarker(
+                [22.9868, 87.855],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_3366d8c301230728ab78f94415a53ae1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f33fcb89a215ccba61c478a727b983ec = $(`<div id="html_f33fcb89a215ccba61c478a727b983ec" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             West Bengal         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         1.801          <br>          <b>Accidents:</b>         10438          <br>          <b>Deaths:</b>         4198          <br>          <b>Injuries:</b>         8705      </div>     </div>`)[0];
+                popup_3366d8c301230728ab78f94415a53ae1.setContent(html_f33fcb89a215ccba61c478a727b983ec);
+            
+        
+
+        circle_marker_e505829b8e47ea83b9ed341de29b173d.bindPopup(popup_3366d8c301230728ab78f94415a53ae1)
+        ;
+
+        
+    
+    
+            circle_marker_e505829b8e47ea83b9ed341de29b173d.bindTooltip(
+                `<div>
+                     West Bengal - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a6e144ee38f518683792674d68faf960 = L.circleMarker(
+                [20.9517, 85.0985],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_c03b6e2fe9235de7d77b82721b4ad72f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_15adf8894d406c9a8658b1333f8a17d2 = $(`<div id="html_15adf8894d406c9a8658b1333f8a17d2" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Odisha         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         1.627          <br>          <b>Accidents:</b>         9430          <br>          <b>Deaths:</b>         3988          <br>          <b>Injuries:</b>         7675      </div>     </div>`)[0];
+                popup_c03b6e2fe9235de7d77b82721b4ad72f.setContent(html_15adf8894d406c9a8658b1333f8a17d2);
+            
+        
+
+        circle_marker_a6e144ee38f518683792674d68faf960.bindPopup(popup_c03b6e2fe9235de7d77b82721b4ad72f)
+        ;
+
+        
+    
+    
+            circle_marker_a6e144ee38f518683792674d68faf960.bindTooltip(
+                `<div>
+                     Odisha - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fe07d5425d1972084439d7828fd261c6 = L.circleMarker(
+                [29.0588, 76.0856],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_48ab55f9cee9355a24ab7bbf0113ca7a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3d8fdd9bdca8b69d983beeabf596b07b = $(`<div id="html_3d8fdd9bdca8b69d983beeabf596b07b" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Haryana         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         1.558          <br>          <b>Accidents:</b>         9028          <br>          <b>Deaths:</b>         3834          <br>          <b>Injuries:</b>         6486      </div>     </div>`)[0];
+                popup_48ab55f9cee9355a24ab7bbf0113ca7a.setContent(html_3d8fdd9bdca8b69d983beeabf596b07b);
+            
+        
+
+        circle_marker_fe07d5425d1972084439d7828fd261c6.bindPopup(popup_48ab55f9cee9355a24ab7bbf0113ca7a)
+        ;
+
+        
+    
+    
+            circle_marker_fe07d5425d1972084439d7828fd261c6.bindTooltip(
+                `<div>
+                     Haryana - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_59afcbe2458aae34fe0f5681f45e3db7 = L.circleMarker(
+                [25.0961, 85.3131],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_c30a242d355cdb2046f98e31b64197de = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f13efc5d98e17ec021648c03b7275207 = $(`<div id="html_f13efc5d98e17ec021648c03b7275207" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Bihar         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         1.474          <br>          <b>Accidents:</b>         8546          <br>          <b>Deaths:</b>         5106          <br>          <b>Injuries:</b>         5878      </div>     </div>`)[0];
+                popup_c30a242d355cdb2046f98e31b64197de.setContent(html_f13efc5d98e17ec021648c03b7275207);
+            
+        
+
+        circle_marker_59afcbe2458aae34fe0f5681f45e3db7.bindPopup(popup_c30a242d355cdb2046f98e31b64197de)
+        ;
+
+        
+    
+    
+            circle_marker_59afcbe2458aae34fe0f5681f45e3db7.bindTooltip(
+                `<div>
+                     Bihar - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_27ade883ffff4dca297169489db4b39b = L.circleMarker(
+                [26.2006, 92.9376],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_ef9665348a786bab4bac3518c8b87d68 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0b458943489c6f0ad0824f6a7363b405 = $(`<div id="html_0b458943489c6f0ad0824f6a7363b405" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Assam         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         1.204          <br>          <b>Accidents:</b>         6978          <br>          <b>Deaths:</b>         2755          <br>          <b>Injuries:</b>         5279      </div>     </div>`)[0];
+                popup_ef9665348a786bab4bac3518c8b87d68.setContent(html_0b458943489c6f0ad0824f6a7363b405);
+            
+        
+
+        circle_marker_27ade883ffff4dca297169489db4b39b.bindPopup(popup_ef9665348a786bab4bac3518c8b87d68)
+        ;
+
+        
+    
+    
+            circle_marker_27ade883ffff4dca297169489db4b39b.bindTooltip(
+                `<div>
+                     Assam - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_fe65d48e4a70d2649914a468cf34a74f = L.circleMarker(
+                [31.1471, 75.3412],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_61b37fba419cd9156dd3a7663333c42b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_86b732c6e502738aeac662fe24924271 = $(`<div id="html_86b732c6e502738aeac662fe24924271" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Punjab         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         1.016          <br>          <b>Accidents:</b>         5887          <br>          <b>Deaths:</b>         3600          <br>          <b>Injuries:</b>         3634      </div>     </div>`)[0];
+                popup_61b37fba419cd9156dd3a7663333c42b.setContent(html_86b732c6e502738aeac662fe24924271);
+            
+        
+
+        circle_marker_fe65d48e4a70d2649914a468cf34a74f.bindPopup(popup_61b37fba419cd9156dd3a7663333c42b)
+        ;
+
+        
+    
+    
+            circle_marker_fe65d48e4a70d2649914a468cf34a74f.bindTooltip(
+                `<div>
+                     Punjab - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_3355f40a4ad5fa1d53ea6d4cb5a84c6e = L.circleMarker(
+                [33.7782, 76.5762],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_5f1da11dbc6c2e4eded15e3ec1fbde4c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8b5472b2145f3e1e012dbe94e06ec45f = $(`<div id="html_8b5472b2145f3e1e012dbe94e06ec45f" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Jammu and Kashmir         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.971          <br>          <b>Accidents:</b>         5628          <br>          <b>Deaths:</b>         1561          <br>          <b>Injuries:</b>         6305      </div>     </div>`)[0];
+                popup_5f1da11dbc6c2e4eded15e3ec1fbde4c.setContent(html_8b5472b2145f3e1e012dbe94e06ec45f);
+            
+        
+
+        circle_marker_3355f40a4ad5fa1d53ea6d4cb5a84c6e.bindPopup(popup_5f1da11dbc6c2e4eded15e3ec1fbde4c)
+        ;
+
+        
+    
+    
+            circle_marker_3355f40a4ad5fa1d53ea6d4cb5a84c6e.bindTooltip(
+                `<div>
+                     Jammu and Kashmir - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_23507e36ed24f609202145e666f652d2 = L.circleMarker(
+                [28.7041, 77.1025],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_3425524b51a7acb87e75c1199acd08a9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_173c87d623eee7d83122d9eaecb0657f = $(`<div id="html_173c87d623eee7d83122d9eaecb0657f" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Delhi         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.934          <br>          <b>Accidents:</b>         5414          <br>          <b>Deaths:</b>         1862          <br>          <b>Injuries:</b>         4667      </div>     </div>`)[0];
+                popup_3425524b51a7acb87e75c1199acd08a9.setContent(html_173c87d623eee7d83122d9eaecb0657f);
+            
+        
+
+        circle_marker_23507e36ed24f609202145e666f652d2.bindPopup(popup_3425524b51a7acb87e75c1199acd08a9)
+        ;
+
+        
+    
+    
+            circle_marker_23507e36ed24f609202145e666f652d2.bindTooltip(
+                `<div>
+                     Delhi - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_a36df9627339d3ebd98181c459a26062 = L.circleMarker(
+                [23.6102, 85.2799],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_17daea29b17490aaf4c19e76e067ffd9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_20fb0c435f624650af55ad02333754eb = $(`<div id="html_20fb0c435f624650af55ad02333754eb" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Jharkhand         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.891          <br>          <b>Accidents:</b>         5163          <br>          <b>Deaths:</b>         3050          <br>          <b>Injuries:</b>         3761      </div>     </div>`)[0];
+                popup_17daea29b17490aaf4c19e76e067ffd9.setContent(html_20fb0c435f624650af55ad02333754eb);
+            
+        
+
+        circle_marker_a36df9627339d3ebd98181c459a26062.bindPopup(popup_17daea29b17490aaf4c19e76e067ffd9)
+        ;
+
+        
+    
+    
+            circle_marker_a36df9627339d3ebd98181c459a26062.bindTooltip(
+                `<div>
+                     Jharkhand - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c39ce4122052a370145e3b6b86abef99 = L.circleMarker(
+                [34.1526, 77.5771],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_b30edebb053e43c8cd434ea5357ddb92 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_513fb424c1916783d5874c920789d2ba = $(`<div id="html_513fb424c1916783d5874c920789d2ba" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Ladakh         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.717          <br>          <b>Accidents:</b>         4155          <br>          <b>Deaths:</b>         2114          <br>          <b>Injuries:</b>         1965      </div>     </div>`)[0];
+                popup_b30edebb053e43c8cd434ea5357ddb92.setContent(html_513fb424c1916783d5874c920789d2ba);
+            
+        
+
+        circle_marker_c39ce4122052a370145e3b6b86abef99.bindPopup(popup_b30edebb053e43c8cd434ea5357ddb92)
+        ;
+
+        
+    
+    
+            circle_marker_c39ce4122052a370145e3b6b86abef99.bindTooltip(
+                `<div>
+                     Ladakh - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4928e72842091383430c6bcfe177f36a = L.circleMarker(
+                [15.2993, 74.124],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_d20f4ccdd9adb7ba0e58d4123e2537ed = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b4b7455e49584a176ee418bbc8e7118b = $(`<div id="html_b4b7455e49584a176ee418bbc8e7118b" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Goa         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.656          <br>          <b>Accidents:</b>         3801          <br>          <b>Deaths:</b>         1208          <br>          <b>Injuries:</b>         2380      </div>     </div>`)[0];
+                popup_d20f4ccdd9adb7ba0e58d4123e2537ed.setContent(html_b4b7455e49584a176ee418bbc8e7118b);
+            
+        
+
+        circle_marker_4928e72842091383430c6bcfe177f36a.bindPopup(popup_d20f4ccdd9adb7ba0e58d4123e2537ed)
+        ;
+
+        
+    
+    
+            circle_marker_4928e72842091383430c6bcfe177f36a.bindTooltip(
+                `<div>
+                     Goa - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bb8195913f112cdc3c9e16eb69dc5768 = L.circleMarker(
+                [31.1048, 77.1734],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_02f0d96f215e4b321902db739dfef54f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8d21b665819c1ac3703ebd643c17731b = $(`<div id="html_8d21b665819c1ac3703ebd643c17731b" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Himachal Pradesh         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.602          <br>          <b>Accidents:</b>         3492          <br>          <b>Deaths:</b>         1678          <br>          <b>Injuries:</b>         3793      </div>     </div>`)[0];
+                popup_02f0d96f215e4b321902db739dfef54f.setContent(html_8d21b665819c1ac3703ebd643c17731b);
+            
+        
+
+        circle_marker_bb8195913f112cdc3c9e16eb69dc5768.bindPopup(popup_02f0d96f215e4b321902db739dfef54f)
+        ;
+
+        
+    
+    
+            circle_marker_bb8195913f112cdc3c9e16eb69dc5768.bindTooltip(
+                `<div>
+                     Himachal Pradesh - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_562e01e42eb1c392b441afd1bccee3bf = L.circleMarker(
+                [20.4283, 72.8397],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_9fa00ea125920f26bb1b114e7a7e9b45 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_de1f380a0226b62ae81708f521644dbb = $(`<div id="html_de1f380a0226b62ae81708f521644dbb" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Daman and Diu         </h3>          <b>Hotspot Level:</b>         <span style="color:green;">             Low         </span>          <br><br>          <b>Risk Score:</b>         0.577          <br>          <b>Accidents:</b>         3344          <br>          <b>Deaths:</b>         1462          <br>          <b>Injuries:</b>         4168      </div>     </div>`)[0];
+                popup_9fa00ea125920f26bb1b114e7a7e9b45.setContent(html_de1f380a0226b62ae81708f521644dbb);
+            
+        
+
+        circle_marker_562e01e42eb1c392b441afd1bccee3bf.bindPopup(popup_9fa00ea125920f26bb1b114e7a7e9b45)
+        ;
+
+        
+    
+    
+            circle_marker_562e01e42eb1c392b441afd1bccee3bf.bindTooltip(
+                `<div>
+                     Daman and Diu - Low Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_47a2c164208d7223cb85f7b8e8e58f17 = L.circleMarker(
+                [30.0668, 79.0193],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_eaaec2f0fdbd3c42a1d436d7fe575f3e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9e30784b1eff41f6774fb89a952f877e = $(`<div id="html_9e30784b1eff41f6774fb89a952f877e" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Uttarakhand         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.448          <br>          <b>Accidents:</b>         2594          <br>          <b>Deaths:</b>         1551          <br>          <b>Injuries:</b>         2606      </div>     </div>`)[0];
+                popup_eaaec2f0fdbd3c42a1d436d7fe575f3e.setContent(html_9e30784b1eff41f6774fb89a952f877e);
+            
+        
+
+        circle_marker_47a2c164208d7223cb85f7b8e8e58f17.bindPopup(popup_eaaec2f0fdbd3c42a1d436d7fe575f3e)
+        ;
+
+        
+    
+    
+            circle_marker_47a2c164208d7223cb85f7b8e8e58f17.bindTooltip(
+                `<div>
+                     Uttarakhand - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_9603ab163b919348a40167cbe6163ceb = L.circleMarker(
+                [11.9416, 79.8083],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_17eef5dd26cc3f607f0613baa7ea8cd9 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b339ea485f7f635c2fe4ed8949ae6162 = $(`<div id="html_b339ea485f7f635c2fe4ed8949ae6162" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Puducherry         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.429          <br>          <b>Accidents:</b>         2487          <br>          <b>Deaths:</b>         1158          <br>          <b>Injuries:</b>         2575      </div>     </div>`)[0];
+                popup_17eef5dd26cc3f607f0613baa7ea8cd9.setContent(html_b339ea485f7f635c2fe4ed8949ae6162);
+            
+        
+
+        circle_marker_9603ab163b919348a40167cbe6163ceb.bindPopup(popup_17eef5dd26cc3f607f0613baa7ea8cd9)
+        ;
+
+        
+    
+    
+            circle_marker_9603ab163b919348a40167cbe6163ceb.bindTooltip(
+                `<div>
+                     Puducherry - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_4a6895b26f91d0dd53177d6245d224d2 = L.circleMarker(
+                [23.9408, 91.9882],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_d4cd5b8daab362bdde4188518400731d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6429dda00d7e3f2a164cfe9722d2d950 = $(`<div id="html_6429dda00d7e3f2a164cfe9722d2d950" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Tripura         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.344          <br>          <b>Accidents:</b>         1992          <br>          <b>Deaths:</b>         1184          <br>          <b>Injuries:</b>         2118      </div>     </div>`)[0];
+                popup_d4cd5b8daab362bdde4188518400731d.setContent(html_6429dda00d7e3f2a164cfe9722d2d950);
+            
+        
+
+        circle_marker_4a6895b26f91d0dd53177d6245d224d2.bindPopup(popup_d4cd5b8daab362bdde4188518400731d)
+        ;
+
+        
+    
+    
+            circle_marker_4a6895b26f91d0dd53177d6245d224d2.bindTooltip(
+                `<div>
+                     Tripura - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e22e83f3306542586fbe32a43a328dba = L.circleMarker(
+                [24.6637, 93.9063],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_31e16c4cc5683cb6cdc1f72e099a53a5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4e263fefe6d85e44b61389b8a78a70fb = $(`<div id="html_4e263fefe6d85e44b61389b8a78a70fb" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Manipur         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.340          <br>          <b>Accidents:</b>         1971          <br>          <b>Deaths:</b>         1139          <br>          <b>Injuries:</b>         2132      </div>     </div>`)[0];
+                popup_31e16c4cc5683cb6cdc1f72e099a53a5.setContent(html_4e263fefe6d85e44b61389b8a78a70fb);
+            
+        
+
+        circle_marker_e22e83f3306542586fbe32a43a328dba.bindPopup(popup_31e16c4cc5683cb6cdc1f72e099a53a5)
+        ;
+
+        
+    
+    
+            circle_marker_e22e83f3306542586fbe32a43a328dba.bindTooltip(
+                `<div>
+                     Manipur - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ec2e56b8d0750d62326ccef1fb6930bf = L.circleMarker(
+                [26.1584, 94.5624],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_bd4921f7519597317882f2718dd61e46 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ce1c913f3d735bee97e15d07dec0fe38 = $(`<div id="html_ce1c913f3d735bee97e15d07dec0fe38" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Nagaland         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.339          <br>          <b>Accidents:</b>         1963          <br>          <b>Deaths:</b>         1089          <br>          <b>Injuries:</b>         1944      </div>     </div>`)[0];
+                popup_bd4921f7519597317882f2718dd61e46.setContent(html_ce1c913f3d735bee97e15d07dec0fe38);
+            
+        
+
+        circle_marker_ec2e56b8d0750d62326ccef1fb6930bf.bindPopup(popup_bd4921f7519597317882f2718dd61e46)
+        ;
+
+        
+    
+    
+            circle_marker_ec2e56b8d0750d62326ccef1fb6930bf.bindTooltip(
+                `<div>
+                     Nagaland - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_979cd8dc989156c45033cb8fd4c3efa8 = L.circleMarker(
+                [25.467, 91.3662],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_f1f07a045b52b82d9a8625dfeaaae058 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4594dac31d333bd838e60f1e93abbc6b = $(`<div id="html_4594dac31d333bd838e60f1e93abbc6b" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Meghalaya         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.316          <br>          <b>Accidents:</b>         1829          <br>          <b>Deaths:</b>         1163          <br>          <b>Injuries:</b>         1938      </div>     </div>`)[0];
+                popup_f1f07a045b52b82d9a8625dfeaaae058.setContent(html_4594dac31d333bd838e60f1e93abbc6b);
+            
+        
+
+        circle_marker_979cd8dc989156c45033cb8fd4c3efa8.bindPopup(popup_f1f07a045b52b82d9a8625dfeaaae058)
+        ;
+
+        
+    
+    
+            circle_marker_979cd8dc989156c45033cb8fd4c3efa8.bindTooltip(
+                `<div>
+                     Meghalaya - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_7d3894af6271ebd72718be0eebd39544 = L.circleMarker(
+                [30.7333, 76.7794],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_bda058c815425a64190c777b0110815c = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_89082d3d30c0048b1063aefd4da2d86a = $(`<div id="html_89082d3d30c0048b1063aefd4da2d86a" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Chandigarh         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.307          <br>          <b>Accidents:</b>         1778          <br>          <b>Deaths:</b>         1114          <br>          <b>Injuries:</b>         1883      </div>     </div>`)[0];
+                popup_bda058c815425a64190c777b0110815c.setContent(html_89082d3d30c0048b1063aefd4da2d86a);
+            
+        
+
+        circle_marker_7d3894af6271ebd72718be0eebd39544.bindPopup(popup_bda058c815425a64190c777b0110815c)
+        ;
+
+        
+    
+    
+            circle_marker_7d3894af6271ebd72718be0eebd39544.bindTooltip(
+                `<div>
+                     Chandigarh - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_41829dd5ae43bb4f13b59b146287718a = L.circleMarker(
+                [28.218, 94.7278],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_3886aad125431bbd93d68c84675a41f0 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_15e15b4546b0602416130df99319cf36 = $(`<div id="html_15e15b4546b0602416130df99319cf36" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Arunachal Pradesh         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.305          <br>          <b>Accidents:</b>         1768          <br>          <b>Deaths:</b>         1140          <br>          <b>Injuries:</b>         1928      </div>     </div>`)[0];
+                popup_3886aad125431bbd93d68c84675a41f0.setContent(html_15e15b4546b0602416130df99319cf36);
+            
+        
+
+        circle_marker_41829dd5ae43bb4f13b59b146287718a.bindPopup(popup_3886aad125431bbd93d68c84675a41f0)
+        ;
+
+        
+    
+    
+            circle_marker_41829dd5ae43bb4f13b59b146287718a.bindTooltip(
+                `<div>
+                     Arunachal Pradesh - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_bb99960e5a74ec7a873afa51f361d547 = L.circleMarker(
+                [11.7401, 92.6586],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_728f2e3e1c6370f7a7e2f426707782cd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_934788e594ebae9b88c4753b022cfe95 = $(`<div id="html_934788e594ebae9b88c4753b022cfe95" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Andaman and Nicobar Islands         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.298          <br>          <b>Accidents:</b>         1729          <br>          <b>Deaths:</b>         1074          <br>          <b>Injuries:</b>         1861      </div>     </div>`)[0];
+                popup_728f2e3e1c6370f7a7e2f426707782cd.setContent(html_934788e594ebae9b88c4753b022cfe95);
+            
+        
+
+        circle_marker_bb99960e5a74ec7a873afa51f361d547.bindPopup(popup_728f2e3e1c6370f7a7e2f426707782cd)
+        ;
+
+        
+    
+    
+            circle_marker_bb99960e5a74ec7a873afa51f361d547.bindTooltip(
+                `<div>
+                     Andaman and Nicobar Islands - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_62d69340758eaa212af85d0dac7d65aa = L.circleMarker(
+                [27.533, 88.5122],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_635fd342ed92d09bacd46ac77f2cf8ac = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e26194fcec7c97263ddd026367ced6c1 = $(`<div id="html_e26194fcec7c97263ddd026367ced6c1" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Sikkim         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.297          <br>          <b>Accidents:</b>         1724          <br>          <b>Deaths:</b>         1101          <br>          <b>Injuries:</b>         1961      </div>     </div>`)[0];
+                popup_635fd342ed92d09bacd46ac77f2cf8ac.setContent(html_e26194fcec7c97263ddd026367ced6c1);
+            
+        
+
+        circle_marker_62d69340758eaa212af85d0dac7d65aa.bindPopup(popup_635fd342ed92d09bacd46ac77f2cf8ac)
+        ;
+
+        
+    
+    
+            circle_marker_62d69340758eaa212af85d0dac7d65aa.bindTooltip(
+                `<div>
+                     Sikkim - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6f23d3af95a32de99f4469e11c3bc1b0 = L.circleMarker(
+                [23.1645, 92.9376],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_373d23f3108b8b95d2f547bd2522b5a3 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bbfdb52ea791c50991ce7f7e391d63f4 = $(`<div id="html_bbfdb52ea791c50991ce7f7e391d63f4" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Mizoram         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.286          <br>          <b>Accidents:</b>         1656          <br>          <b>Deaths:</b>         1091          <br>          <b>Injuries:</b>         1846      </div>     </div>`)[0];
+                popup_373d23f3108b8b95d2f547bd2522b5a3.setContent(html_bbfdb52ea791c50991ce7f7e391d63f4);
+            
+        
+
+        circle_marker_6f23d3af95a32de99f4469e11c3bc1b0.bindPopup(popup_373d23f3108b8b95d2f547bd2522b5a3)
+        ;
+
+        
+    
+    
+            circle_marker_6f23d3af95a32de99f4469e11c3bc1b0.bindTooltip(
+                `<div>
+                     Mizoram - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_221ac6bd5cc07ee4c8151f99f3b0a97c = L.circleMarker(
+                [10.5667, 72.6417],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_d7dd3b757c97bf63c7689c0472949fcf = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8ed3b5bb1a7482266bebfd147d93073e = $(`<div id="html_8ed3b5bb1a7482266bebfd147d93073e" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Lakshadweep         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.277          <br>          <b>Accidents:</b>         1605          <br>          <b>Deaths:</b>         1064          <br>          <b>Injuries:</b>         1788      </div>     </div>`)[0];
+                popup_d7dd3b757c97bf63c7689c0472949fcf.setContent(html_8ed3b5bb1a7482266bebfd147d93073e);
+            
+        
+
+        circle_marker_221ac6bd5cc07ee4c8151f99f3b0a97c.bindPopup(popup_d7dd3b757c97bf63c7689c0472949fcf)
+        ;
+
+        
+    
+    
+            circle_marker_221ac6bd5cc07ee4c8151f99f3b0a97c.bindTooltip(
+                `<div>
+                     Lakshadweep - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_2c4a1756fe325434ac885b4aac893ce9 = L.circleMarker(
+                [20.1809, 73.0169],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.75, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(marker_cluster_193f3fd3928c67dfda43fe8c45bd336b);
+        
+    
+        var popup_363ad70f5d9880564cc0d52b8181105a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0a90892cd658b9a5adb00edcfeea0fdc = $(`<div id="html_0a90892cd658b9a5adb00edcfeea0fdc" style="width: 100.0%; height: 100.0%;">     <div style="font-family:Arial; width:250px;">          <h3 style="margin-bottom:8px;">             Dadra and Nagar Haveli         </h3>          <b>Hotspot Level:</b>         <span style="color:orange;">             Medium         </span>          <br><br>          <b>Risk Score:</b>         0.020          <br>          <b>Accidents:</b>         117          <br>          <b>Deaths:</b>         545          <br>          <b>Injuries:</b>         4168      </div>     </div>`)[0];
+                popup_363ad70f5d9880564cc0d52b8181105a.setContent(html_0a90892cd658b9a5adb00edcfeea0fdc);
+            
+        
+
+        circle_marker_2c4a1756fe325434ac885b4aac893ce9.bindPopup(popup_363ad70f5d9880564cc0d52b8181105a)
+        ;
+
+        
+    
+    
+            circle_marker_2c4a1756fe325434ac885b4aac893ce9.bindTooltip(
+                `<div>
+                     Dadra and Nagar Haveli - Medium Risk
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            marker_cluster_193f3fd3928c67dfda43fe8c45bd336b.addTo(map_946bbdfad3de0837e5dfcfff5526c1d7);
+        
+    
+            var layer_control_c22f22ff93f3ba70053c5d5eb82d410a_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_0445ec742431d9c98dd7ca3d663cc6c3,
+                },
+                overlays :  {
+                    "Accident Hotspots" : marker_cluster_193f3fd3928c67dfda43fe8c45bd336b,
+                },
+            };
+            let layer_control_c22f22ff93f3ba70053c5d5eb82d410a = L.control.layers(
+                layer_control_c22f22ff93f3ba70053c5d5eb82d410a_layers.base_layers,
+                layer_control_c22f22ff93f3ba70053c5d5eb82d410a_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_946bbdfad3de0837e5dfcfff5526c1d7);
+
+        
+</script>
+</html>

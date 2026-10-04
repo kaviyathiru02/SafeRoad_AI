@@ -1,0 +1,2 @@
+test_year,training_years,training_rows,testing_rows,accuracy,precision,recall,f1
+2021,2020,37,37,91.8918918918919,88.39285714285715,90.13888888888889,89.07493368700266

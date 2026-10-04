@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.streamlit/secrets.toml
+
+# Logs
+*.log
+
+# Large USA runtime artifacts
+models/usa_risk_model.pkl
+dataset/US Datasets/cleaned_US_Accidents.csv
+
+# USA source/intermediate datasets
+dataset/US Datasets/US_Accidents_Dec21_updated.csv
+dataset/US Datasets/hotspot_US_Accidents.csv
+dataset/US Datasets/preprocessed_US_Accidents.csv
+outputs/features_usa.csv
+outputs/processed_usa.csv
+
+# Old requirements backup
+requirements_backup.txt
+
+# OS files
+.DS_Store
+Thumbs.db
